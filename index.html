@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nyko Paolo P. Guillero — Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Google Fonts: Syne (display) + DM Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <!-- Boxicons for icons -->
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ░░ LOADER ░░ -->
+  <div id="loader" aria-hidden="true">
+    <div class="loader-ring"></div>
+    <span class="loader-text">Loading<span class="loader-dots">...</span></span>
+  </div>
+
+  <!-- ░░ NAVIGATION ░░ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">NP<span class="accent">.</span></a>
+
+      <!-- Desktop links -->
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#achievements" class="nav-link">Achievements</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <!-- Dark / Light toggle -->
+        <button id="themeToggle" class="icon-btn" aria-label="Toggle theme">
+          <i class="bx bx-moon" id="themeIcon"></i>
+        </button>
+        <!-- Hamburger -->
+        <button id="menuToggle" class="icon-btn hamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="mobile-menu" id="mobileMenu">
+      <ul>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#achievements" class="nav-link">Achievements</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ░░ HERO ░░ -->
+    <section id="hero">
+      <!-- Decorative blobs -->
+      <div class="blob blob-1" aria-hidden="true"></div>
+      <div class="blob blob-2" aria-hidden="true"></div>
+
+      <div class="hero-content reveal">
+        <h1 class="hero-name">
+          Nyko Paolo<br />
+          <span class="hero-surname">P. Guillero</span>
+        </h1>
+        <!-- Typing effect target -->
+        <p class="hero-bio">
+          <span id="typingTarget"></span><span class="cursor">|</span>
+        </p>
+
+        <div class="hero-contacts">
+          <a href="https://facebook.com" target="_blank" rel="noopener" class="contact-chip">
+            <i class="bx bxl-facebook-circle"></i> Nyko Paolo
+          </a>
+          <a href="tel:09262500133" class="contact-chip">
+            <i class="bx bx-phone"></i> 09262500133
+          </a>
+        </div>
+
+        <a href="#projects" class="btn btn-primary">
+          View My Projects <i class="bx bx-right-arrow-alt"></i>
+        </a>
+      </div>
+
+      <!-- Floating code card decoration -->
+      <div class="hero-card reveal" aria-hidden="true">
+        <div class="code-card">
+          <div class="code-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <pre class="code-snippet"><code><span class="kw">const</span> <span class="fn">developer</span> = {
+          name: <span class="str">"Nyko Paolo"</span>,
+          role: <span class="str">"IT Student"</span>,
+          passion: [
+            <span class="str">"Web Dev"</span>,
+            <span class="str">"Mobile Dev"</span>,
+            <span class="str">"Innovation"</span>,
+          ],
+          available: <span class="bool">true</span>,
+        };
+      </code></pre>
+        </div>
+      </div>
+
+      <div class="scroll-hint" aria-hidden="true">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- ░░ ABOUT ░░ -->
+    <section id="about"> reveal">01 — About</div>
+      <div class="about-grid">
+      <div class="section-label
+
+        !--
+          ╔══════════════════════════════════════════════════════╗
+          ║  YOUR PROFILE PHOTO — HOW TO ADD IT:                ║
+          ║                                                      ║
+          ║  1. Save your photo as  "profile.jpg"  in the same  ║
+          ║     folder as index.html (next to style.css).       ║
+          ║                                                      ║
+          ║  2. Replace  YOUR-PHOTO.jpg  below with your file:  ║
+          ║     <img src="profile.jpg" alt="Nyko Paolo" />      ║
+          ║                                                      ║
+          ║  3. The placeholder circle will be replaced by your ║
+          ║     real photo automatically — no other CSS needed. ║
+          ╚══════════════════════════════════════════════════════╝
+        -->
+        <div class="about-photo reveal">
+          <div class="photo-wrapper">
+            <div class="photo-frame">
+              <img src="Src/Nyko Guillero.png"
+                   alt="Nyko Paolo P. Guillero"
+                   class="profile-img"
+                   onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              <div class="photo-placeholder" style="display:none;">
+                <i class="bx bx-user"></i>
+                <span>Add your photo</span>
+              </div>
+            </div>
+            <div class="photo-accent-ring" aria-hidden="true"></div>
+            
+            <div class="edu-logo-badge">
+              <div class="edu-logo-icon">
+                <i class="bx bxs-graduation"></i>
+              </div>
+              <div class="edu-logo-content">
+                <span class="edu-tag">BSIT</span>
+                <span class="edu-name">Information Technology</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-text reveal">
+          <h2 class="section-title">Who Am I?</h2>
+          <p>
+            I'm <strong>Nyko Paolo P. Guillero</strong>, an aspiring IT student currently pursuing a 
+            <strong>Bachelor of Science in Information Technology</strong>. 
+            I'm passionate about crafting clean, functional, and beautiful web and mobile experiences 
+            that solve real-world problems.
+          </p>
+          <p>
+            From building grocery inventory systems to peer-tutoring apps, I love turning ideas 
+            into working software. I thrive on learning new technologies and pushing the boundaries 
+            of what I can create.
+          </p>
+          <div class="about-badges">
+            <span class="badge"><i class="bx bx-book-open"></i> BSIT Student</span>
+            <span class="badge"><i class="bx bx-code-alt"></i> Web Developer</span>
+            <span class="badge"><i class="bx bx-mobile-alt"></i> Mobile Dev</span>
+          </div>
+        </div>
+
+        <div class="about-card reveal">
+          <div class="info-card">
+            <h3>Quick Facts</h3>
+            <ul>
+              <li><i class="bx bx-user"></i> <span>Nyko Paolo P. Guillero</span></li>
+              <li><i class="bx bx-graduation"></i> <span>BS Information Technology</span></li>
+              <li><i class="bx bx-phone"></i> <span>09262500133</span></li>
+              <li><i class="bx bxl-facebook"></i> <span>Nyko Paolo</span></li>
+              <li><i class="bx bx-map"></i> <span>Philippines</span></li>
+              <li><i class="bx bx-check-circle"></i> <span>Open to Opportunities</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░ SKILLS ░░ -->
+    <section id="skills">
+      <div class="section-label reveal">02 — Skills</div>
+      <h2 class="section-title reveal">What I Work With</h2>
+      <p class="section-sub reveal">A growing toolkit built through projects and continuous learning.</p>
+
+      <div class="skills-grid reveal">
+
+        <div class="skill-card">
+          <div class="skill-icon"><i class="bx bxl-html5"></i></div>
+          <div class="skill-info">
+            <h4>HTML</h4>
+            <p>Semantic markup &amp; modern HTML5 standards.</p>
+          </div>
+          <span class="skill-level">Proficient</span>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-icon"><i class="bx bxl-css3"></i></div>
+          <div class="skill-info">
+            <h4>CSS</h4>
+            <p>Responsive layouts, animations &amp; Flexbox/Grid.</p>
+          </div>
+          <span class="skill-level">Proficient</span>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-icon"><i class="bx bxl-javascript"></i></div>
+          <div class="skill-info">
+            <h4>JavaScript</h4>
+            <p>DOM manipulation, ES6+ &amp; interactive UIs.</p>
+          </div>
+          <span class="skill-level">Intermediate</span>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-icon"><i class="bx bxl-php"></i></div>
+          <div class="skill-info">
+            <h4>PHP</h4>
+            <p>Server-side scripting &amp; dynamic web apps.</p>
+          </div>
+          <span class="skill-level">Intermediate</span>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-icon"><i class="bx bx-leaf"></i></div>
+          <div class="skill-info">
+            <h4>Laravel</h4>
+            <p>MVC framework for robust PHP web development.</p>
+          </div>
+          <span class="skill-level">Learning</span>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-icon"><i class="bx bxl-react"></i></div>
+          <div class="skill-info">
+            <h4>NativeWind</h4>
+            <p>Tailwind CSS styling for React Native mobile apps.</p>
+          </div>
+          <span class="skill-level">Learning</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ░░ PROJECTS ░░ -->
+    <section id="projects">
+      <div class="section-label reveal">03 — Projects</div>
+      <h2 class="section-title reveal">Things I've Built</h2>
+      <p class="section-sub reveal">A selection of academic and personal projects.</p>
+
+      <div class="projects-grid">
+
+        <!-- Project A -->
+        <article class="project-card reveal">
+          <div class="project-img">
+            <div class="project-placeholder">
+              <i class="bx bx-store-alt"></i>
+            </div>
+            <div class="project-overlay">
+              <span>Web Application</span>
+            </div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">Tunhay Grocery System</h3>
+            <p class="project-desc">
+              A web-based sales and inventory management system designed for 
+              Tunhay Grocery. Handles product listings, real-time stock tracking, 
+              and sales reporting in an intuitive dashboard.
+            </p>
+            <div class="project-tags">
+              <span class="tag">PHP</span>
+              <span class="tag">Laravel</span>
+              <span class="tag">MySQL</span>
+              <span class="tag">HTML/CSS</span>
+            </div>
+            <div class="project-actions">
+              <button class="btn btn-outline" onclick="alert('Project details coming soon!')">
+                <i class="bx bx-link-external"></i> View Project
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project B -->
+        <article class="project-card reveal">
+          <div class="project-img">
+            <div class="project-placeholder edutor">
+              <i class="bx bx-book-reader"></i>
+            </div>
+            <div class="project-overlay">
+              <span>Mobile Application</span>
+            </div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">EduTor</h3>
+            <p class="project-desc">
+              A peer tutor booking mobile application that seamlessly connects 
+              students with qualified tutors. Features profile matching, scheduling, 
+              and in-app messaging for an easy learning experience.
+            </p>
+            <div class="project-tags">
+              <span class="tag">React Native</span>
+              <span class="tag">NativeWind</span>
+              <span class="tag">Laravel API</span>
+            </div>
+            <div class="project-actions">
+              <button class="btn btn-outline" onclick="alert('Project details coming soon!')">
+                <i class="bx bx-link-external"></i> View Project
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ░░ ACHIEVEMENTS ░░ -->
+    <section id="achievements">
+      <div class="section-label reveal">04 — Achievements</div>
+      <h2 class="section-title reveal">Certificates & Recognition</h2>
+      <p class="section-sub reveal">Milestones along my learning journey — more coming soon!</p>
+
+      <div class="achievements-grid">
+
+        <!-- Oracle Academy Certificate -->
+        <div class="achievement-card cert-card reveal">
+          <div class="cert-preview">
+            <div class="cert-logo">
+              <span class="oracle-text">ORACLE</span>
+              <span class="oracle-sub">Academy</span>
+            </div>
+            <div class="cert-badge"><i class="bx bxs-award"></i></div>
+          </div>
+          <div class="ach-body">
+            <span class="ach-org">Oracle Academy</span>
+            <h4>Java Fundamentals</h4>
+            <p>Award of Course Completion — for satisfactory completion of all coursework.</p>
+            <div class="cert-meta">
+              <span class="cert-date"><i class="bx bx-calendar"></i> June 19, 2024</span>
+              <span class="ach-tag cert">Certificate</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Academic -->
+        <div class="achievement-card reveal">
+          <div class="ach-icon"><i class="bx bxs-medal"></i></div>
+          <div class="ach-body">
+            <h4>Web Development Fundamentals</h4>
+            <p>Completed core coursework covering HTML, CSS, and responsive design principles.</p>
+            <span class="ach-tag">Academic</span>
+          </div>
+        </div>
+
+        <!-- Capstone -->
+        <div class="achievement-card reveal">
+          <div class="ach-icon"><i class="bx bxs-trophy"></i></div>
+          <div class="ach-body">
+            <h4>Capstone Project — Tunhay Grocery</h4>
+            <p>Presented a full-stack web application for a local business.</p>
+            <span class="ach-tag">Project</span>
+          </div>
+        </div>
+
+        <!-- EduTor -->
+        <div class="achievement-card reveal">
+          <div class="ach-icon"><i class="bx bxs-star"></i></div>
+          <div class="ach-body">
+            <h4>Mobile App Development</h4>
+            <p>Built EduTor, a cross-platform peer tutoring app using React Native and NativeWind.</p>
+            <span class="ach-tag">Project</span>
+          </div>
+        </div>
+
+        <!-- Placeholder -->
+        <div class="achievement-card reveal placeholder-card">
+          <div class="ach-icon"><i class="bx bx-plus-circle"></i></div>
+          <div class="ach-body">
+            <h4>More Achievements Coming</h4>
+            <p>Continuously learning and earning new certifications. Stay tuned!</p>
+            <span class="ach-tag">Soon</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ░░ CONTACT ░░ -->
+    <section id="contact">
+      <div class="section-label reveal">05 — Contact</div>
+      <h2 class="section-title reveal">Let's Connect</h2>
+      <p class="section-sub reveal">Got a project in mind or just want to say hi? Drop a message!</p>
+
+      <div class="contact-grid">
+
+        <!-- Contact form -->
+        <div class="contact-form-wrap reveal">
+          <form id="contactForm" novalidate>
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your full name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="your@email.com" required />
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary full-width">
+              Send Message <i class="bx bx-send"></i>
+            </button>
+            <div id="formSuccess" class="form-success" hidden>
+              ✅ Message sent! I'll get back to you soon.
+            </div>
+          </form>
+        </div>
+
+        <!-- Contact info -->
+        <div class="contact-info reveal">
+          <h3>Reach Me Directly</h3>
+          <ul class="contact-list">
+            <li>
+              <a href="https://facebook.com" target="_blank" rel="noopener">
+                <i class="bx bxl-facebook-circle"></i>
+                <div>
+                  <span>Facebook</span>
+                  <strong>Nyko Paolo</strong>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="tel:09262500133">
+                <i class="bx bx-phone"></i>
+                <div>
+                  <span>Phone</span>
+                  <strong>09262500133</strong>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="mailto:nykomanzano@gmail.com">
+                <i class="bx bx-envelope"></i>
+                <div>
+                  <span>Email</span>
+                  <strong>nykomanzano@gmail.com</strong>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ░░ FOOTER ░░ -->
+  <footer>
+    <p>Designed & Built by <strong>Nyko Paolo P. Guillero</strong> &nbsp;·&nbsp; 2026</p>
+  </footer>
+
+  <!-- Back to top -->
+  <button id="backToTop" class="back-top" aria-label="Back to top">
+    <i class="bx bx-up-arrow-alt"></i>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>
