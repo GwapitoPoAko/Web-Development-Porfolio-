@@ -575,6 +575,40 @@ section {
   letter-spacing: 0.5px;
   line-height: 1.2;
 }
+/* Lightbox Styles */
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+  cursor: zoom-out;
+}
+
+.lightbox-content {
+  max-width: 90%;
+  max-height: 80%;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.close {
+  position: absolute;
+  top: 20px; right: 30px;
+  color: white; font-size: 40px; cursor: pointer;
+}
+
+/* Ensure images in grid are clickable */
+.project-img { cursor: zoom-in; }
 
 .edu-name {
   font-size: 0.7rem;
@@ -732,6 +766,38 @@ section {
   background: var(--accent-glow);
   color: var(--accent);
   border: 1px solid rgba(91,255,200,0.25);
+}
+/* Fix for Project Images */
+.project-card .project-img {
+  width: 100%;
+  height: 200px; /* Consistent height */
+  overflow: hidden;
+}
+
+.project-card .project-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Prevents stretching */
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover .project-img img {
+  transform: scale(1.05);
+}
+
+/* Ensure project body has space */
+.project-body {
+  padding: 20px;
+}
+
+.project-title {
+  margin-bottom: 10px;
+}
+
+.project-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 15px;
 }
 
 .projects-grid {

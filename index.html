@@ -144,7 +144,7 @@
             <h3>Quick Facts</h3>
             <ul>
               <li><i class="bx bx-user"></i> <span>Nyko Paolo P. Guillero</span></li>
-              <li><i class="bx bx-graduation"></i> <span>BS Information Technology</span></li>
+              <li><i class="bx bx-book-open"></i> <span>BS Information Technology</span></li>
               <li><i class="bx bx-phone"></i> <span>09262500133</span></li>
               <li><i class="bx bxl-facebook"></i> <span>Nyko Paolo</span></li>
               <li><i class="bx bx-map"></i> <span>Philippines</span></li>
@@ -217,67 +217,34 @@
       </div>
     </section>
 
-    <section id="projects">
+   <section id="projects">
       <div class="section-label reveal">03 — Projects</div>
       <h2 class="section-title reveal">Things I've Built</h2>
       <p class="section-sub reveal">A selection of academic and personal projects.</p>
 
       <div class="projects-grid">
         <article class="project-card reveal">
-          <div class="project-img">
-            <div class="project-placeholder">
-              <i class="bx bx-store-alt"></i>
-            </div>
-            <div class="project-overlay">
-              <span>Web Application</span>
-            </div>
+            <div class="project-img" onclick="openLightbox('Src/Tunhay.jpg')">
+            <img src="Src/Tunhay.jpg" alt="Tunhay Grocery System">
           </div>
           <div class="project-body">
             <h3 class="project-title">Tunhay Grocery System</h3>
-            <p class="project-desc">
-              A web-based sales and inventory management system designed for 
-              Tunhay Grocery. Handles product listings, real-time stock tracking, 
-              and sales reporting in an intuitive dashboard.
-            </p>
+            <p class="project-desc">A web-based sales and inventory management system.</p>
             <div class="project-tags">
-              <span class="tag">PHP</span>
-              <span class="tag">Laravel</span>
-              <span class="tag">MySQL</span>
-              <span class="tag">HTML/CSS</span>
-            </div>
-            <div class="project-actions">
-              <button class="btn btn-outline" onclick="alert('Project details coming soon!')">
-                <i class="bx bx-link-external"></i> View Project
-              </button>
+              <span class="tag">PHP</span><span class="tag">Laravel</span><span class="tag">MySQL</span>
             </div>
           </div>
         </article>
 
         <article class="project-card reveal">
-          <div class="project-img">
-            <div class="project-placeholder edutor">
-              <i class="bx bx-book-reader"></i>
-            </div>
-            <div class="project-overlay">
-              <span>Mobile Application</span>
-            </div>
+          <div class="project-img" onclick="openLightbox('Src/EduTor.jpg')">
+          <img src="Src/EduTor.jpg" alt="Tunhay Grocery System">
           </div>
           <div class="project-body">
             <h3 class="project-title">EduTor</h3>
-            <p class="project-desc">
-              A peer tutor booking mobile application that seamlessly connects 
-              students with qualified tutors. Features profile matching, scheduling, 
-              and in-app messaging for an easy learning experience.
-            </p>
+            <p class="project-desc">A peer tutor booking mobile application.</p>
             <div class="project-tags">
-              <span class="tag">React Native</span>
-              <span class="tag">NativeWind</span>
-              <span class="tag">Laravel API</span>
-            </div>
-            <div class="project-actions">
-              <button class="btn btn-outline" onclick="alert('Project details coming soon!')">
-                <i class="bx bx-link-external"></i> View Project
-              </button>
+              <span class="tag">React Native</span><span class="tag">NativeWind</span><span class="tag">Laravel</span>
             </div>
           </div>
         </article>
@@ -380,6 +347,12 @@
           <h3>Reach Me Directly</h3>
           <ul class="contact-list">
             <li>
+              <a href="https://github.com/GwapitoPoAko/Web-Development-Porfolio-/tree/main" target="_blank" rel="noopener">
+                <i class="bx bxl-github"></i>
+                <div><span>GitHub</span><strong>My github</strong></div>
+              </a>
+            </li>
+            <li>
               <a href="https://facebook.com" target="_blank" rel="noopener">
                 <i class="bx bxl-facebook-circle"></i>
                 <div>
@@ -422,5 +395,20 @@
   </button>
 
   <script src="Script.js"></script>
+
+  <div id="lightbox" class="lightbox" onclick="this.style.display='none'">
+  <span class="close">&times;</span>
+  <img class="lightbox-content" id="fullImage" src="" alt="Zoomed view">
+</div>
+
+<script>
+  
+  function openLightbox(imgSrc) {
+    const lightbox = document.getElementById('lightbox');
+    const fullImage = document.getElementById('fullImage');
+    fullImage.src = imgSrc;
+    lightbox.style.display = 'flex';
+  }
+</script>
 </body>
 </html>
