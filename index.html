@@ -1,414 +1,247 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nyko Paolo P. Guillero — Portfolio</title>
-  <link rel="stylesheet" href="Style.css" />
+  <title>MembraneMind</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-wrap">
+        <div class="brand-badge">◉</div>
+        <div class="brand-copy">
+          <div class="eyebrow">Cell Biology Lab</div>
+          <div class="brand-title">MembraneMind</div>
+        </div>
+      </div>
 
-  <div id="loader" aria-hidden="true">
-    <div class="loader-ring"></div>
-    <span class="loader-text">Loading<span class="loader-dots">...</span></span>
+      <nav class="mode-nav" aria-label="Transport mode">
+        <button class="mode-btn active" data-mode="simple" type="button">Simple Diffusion</button>
+        <button class="mode-btn" data-mode="facilitated" type="button">Facilitated Diffusion</button>
+        <button class="mode-btn" data-mode="active" type="button">Active Transport</button>
+      </nav>
+
+      <div class="status-strip">
+        <label class="status-item temp-control" for="temperatureControl">
+          <span class="status-label">Temp</span>
+          <input id="temperatureControl" type="range" min="5" max="45" value="22" aria-label="Temperature in degrees Celsius" />
+          <strong id="headerTemp">22°C</strong>
+        </label>
+        <span class="status-item"><span class="status-label">Gradient</span> <strong id="headerGradient">0</strong></span>
+        <span class="status-item"><span class="status-label">Rate</span> <strong id="headerRate">Slow</strong></span>
+      </div>
+    </header>
+
+    <main class="main-grid">
+      <aside class="sidebar left-sidebar">
+        <section class="panel-block">
+          <div class="panel-label">Solute Palette</div>
+          <div class="solute-grid">
+            <button class="solute-btn active" data-solute="O2" type="button">
+              <span class="swatch oxygen"></span>
+              <span>O₂</span>
+            </button>
+            <button class="solute-btn" data-solute="CO2" type="button">
+              <span class="swatch carbon"></span>
+              <span>CO₂</span>
+            </button>
+            <button class="solute-btn" data-solute="Na+" type="button">
+              <span class="swatch sodium"></span>
+              <span>Na⁺</span>
+            </button>
+            <button class="solute-btn" data-solute="K+" type="button">
+              <span class="swatch potassium"></span>
+              <span>K⁺</span>
+            </button>
+            <button class="solute-btn full-width" data-solute="Glucose" type="button">
+              <span class="swatch glucose"></span>
+              <span>Glucose</span>
+            </button>
+            <button class="solute-btn full-width atp-btn" data-solute="ATP" type="button">
+              <span class="atp-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span>ATP</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="panel-block">
+          <div class="panel-label">Injection</div>
+          <div class="inject-stack">
+            <button class="inject-btn" id="injectOutside" type="button">
+              <span>Outside</span>
+              <span class="inject-arrow">→</span>
+            </button>
+            <button class="inject-btn" id="injectInside" type="button">
+              <span>Inside</span>
+              <span class="inject-arrow">←</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="panel-block cellmap-block">
+          <div class="panel-label">Cell Map</div>
+          <div class="cellmap-shell">
+            <img class="cellmap-image" src="Image/AnimalCell.jpg" alt="Animal cell diagram" />
+          </div>
+
+          <div class="membrane-preview" aria-label="Membrane view preview">
+            <div class="membrane-labels">
+              <span>OUTSIDE</span>
+              <span>INSIDE</span>
+            </div>
+            <canvas id="membranePreviewCanvas" width="180" height="180"></canvas>
+            <div class="membrane-tag">MEMBRANE VIEW</div>
+          </div>
+        </section>
+      </aside>
+
+      <section class="viewport-panel">
+        <canvas id="simulationCanvas"></canvas>
+      </section>
+
+      <aside class="sidebar right-sidebar">
+        <div id="guidancePanel" class="mode-panel">
+          <div class="panel-label right-label">Lab Insights &amp; Guidance</div>
+          <div class="info-box" id="labInsight">
+            The membrane is stable.<br />Start with a small solute pulse to observe passive movement.
+          </div>
+          <div class="question-box" id="labPrompt">
+            <div class="question-tag">Question</div>
+            Which direction will the gradient drive diffusion?
+          </div>
+        </div>
+
+        <div id="facilitatedPanel" class="mode-panel" hidden>
+          <div class="panel-label right-label">Facilitated Diffusion</div>
+          <section class="transport-box">
+            <div class="transport-title">Leakage Channels</div>
+            <div class="channel-icon-row" aria-label="Sodium and potassium leakage channels"><button class="channel-icon sodium-channel membrane-device-btn" data-device="leak-na" type="button" draggable="true" title="Drag to a membrane slot">Na⁺</button><button class="channel-icon potassium-channel membrane-device-btn" data-device="leak-k" type="button" draggable="true" title="Drag to a membrane slot">K⁺</button></div>
+            <label class="toggle-row"><input id="leakageChannels" type="checkbox" checked /><span>Open for ions</span></label>
+            <button class="text-action remove-device-btn" data-kind="leak" type="button">Remove leakage channel</button>
+          </section>
+          <section class="transport-box">
+            <div class="transport-title">Voltage-gated Channels</div>
+            <div class="channel-icon-row" aria-label="Sodium and potassium voltage-gated channels"><button class="channel-icon sodium-channel membrane-device-btn voltage-channel" data-device="voltage-na" type="button" draggable="true" title="Drag to a membrane slot">Na⁺</button><button class="channel-icon potassium-channel membrane-device-btn voltage-channel" data-device="voltage-k" type="button" draggable="true" title="Drag to a membrane slot">K⁺</button></div>
+            <div class="preset-row" aria-label="Membrane potential presets">
+              <button class="preset-btn active" data-potential="-70" type="button">−70 mV</button>
+              <button class="preset-btn" data-potential="-50" type="button">−50 mV</button>
+              <button class="preset-btn" data-potential="30" type="button">+30 mV</button>
+            </div>
+            <label class="toggle-row"><input id="chargesToggle" type="checkbox" /><span>Charges</span></label>
+            <button class="text-action remove-device-btn" data-kind="voltage" type="button">Remove voltage channel</button>
+          </section>
+          <section class="transport-box">
+            <div class="transport-title">Ligand-gated Channels</div>
+            <div class="channel-icon-row" aria-label="Sodium and potassium ligand-gated channels"><button class="channel-icon sodium-channel membrane-device-btn ligand-channel" data-device="ligand-na" type="button" draggable="true" title="Drag to a membrane slot">Na⁺</button><button class="channel-icon potassium-channel membrane-device-btn ligand-channel" data-device="ligand-k" type="button" draggable="true" title="Drag to a membrane slot">K⁺</button></div>
+            <button class="action-btn channel-action" id="addLigands" type="button">Add Ligands</button>
+            <span class="control-note" id="ligandCount">0 ligands available</span>
+            <button class="text-action" id="removeLigand" type="button">Remove ligand</button>
+            <button class="text-action remove-device-btn" data-kind="ligand" type="button">Remove ligand channel</button>
+          </section>
+        </div>
+
+        <div id="activePanel" class="mode-panel" hidden>
+          <div class="panel-label right-label">Active Transport</div>
+          <section class="transport-box">
+            <div class="transport-title">Active Transporters</div>
+            <button class="transporter-btn active" data-transporter="pump" data-device="pump" type="button" draggable="true"><span class="transporter-icon pump-icon">⇄</span><span>Na⁺/K⁺ Pump</span></button>
+            <button class="transporter-btn" data-transporter="cotransporter" data-device="cotransporter" type="button" draggable="true"><span class="transporter-icon cotransporter-icon">↗</span><span>Na⁺/Glucose Cotransporter</span></button>
+            <div class="atp-requirement"><span class="atp-icon" aria-hidden="true"><i></i><i></i><i></i></span><span>ATP powers active transport</span></div>
+            <button class="text-action remove-device-btn" data-kind="transporter" type="button">Remove transporter</button>
+            <span class="control-note">Inject ATP from the solute palette to power transport against the gradient.</span>
+          </section>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="footer-bar">
+      <div class="footer-panel concentration-panel">
+        <div class="panel-label">Solute Concentrations</div>
+        <div class="slider-grid">
+          <label class="slider-item">
+            <span class="solute-name oxygen-text">O₂</span>
+            <input type="range" id="slider-O2" class="concentration-slider" min="0" max="100" value="52" />
+            <span class="slider-value" id="value-O2">52%</span>
+          </label>
+          <label class="slider-item">
+            <span class="solute-name carbon-text">CO₂</span>
+            <input type="range" id="slider-CO2" class="concentration-slider" min="0" max="100" value="39" />
+            <span class="slider-value" id="value-CO2">39%</span>
+          </label>
+          <label class="slider-item">
+            <span class="solute-name sodium-text">Na⁺</span>
+            <input type="range" id="slider-Na+" class="concentration-slider" min="0" max="100" value="61" />
+            <span class="slider-value" id="value-Na+">61%</span>
+          </label>
+          <label class="slider-item">
+            <span class="solute-name potassium-text">K⁺</span>
+            <input type="range" id="slider-K+" class="concentration-slider" min="0" max="100" value="46" />
+            <span class="slider-value" id="value-K+">46%</span>
+          </label>
+          <label class="slider-item">
+            <span class="solute-name glucose-text">Glucose</span>
+            <input type="range" id="slider-Glucose" class="concentration-slider" min="0" max="100" value="58" />
+            <span class="slider-value" id="value-Glucose">58%</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="footer-panel control-panel">
+        <div class="panel-label">Controls</div>
+        <div class="playback-row">
+          <button class="action-btn primary" id="playBtn" type="button">Play</button>
+          <button class="action-btn secondary" id="pauseBtn" type="button">Pause</button>
+        </div>
+        <div class="speed-row">
+          <span class="speed-label">Speed</span>
+          <button class="speed-btn active" data-rate="0.7" type="button">Slow</button>
+          <button class="speed-btn" data-rate="1" type="button">Normal</button>
+          <button class="speed-btn" data-rate="1.5" type="button">Fast</button>
+        </div>
+        <label class="toggle-row">
+          <input type="checkbox" id="crossingHighlights" checked />
+          <span>Crossing Highlights</span>
+        </label>
+        <label class="toggle-row">
+          <input type="checkbox" id="crossingSounds" checked />
+          <span>Crossing Sounds</span>
+        </label>
+        <label class="toggle-row">
+          <input type="checkbox" id="ambientSounds" />
+          <span>Ambient Sound</span>
+        </label>
+        <button class="action-btn reset-btn" id="resetBtn" type="button">Reset</button>
+      </div>
+
+      <div class="footer-panel stats-panel">
+        <div class="panel-label">Live Stats</div>
+        <div class="stats-grid">
+          <div class="mini-stat">
+            <span>Inside</span>
+            <strong id="statsInside">0</strong>
+          </div>
+          <div class="mini-stat">
+            <span>Outside</span>
+            <strong id="statsOutside">0</strong>
+          </div>
+          <div class="mini-stat">
+            <span>Gradient</span>
+            <strong id="statsGradient">0</strong>
+          </div>
+          <div class="mini-stat">
+            <span>Mode</span>
+            <strong id="statsMode">Passive</strong>
+          </div>
+        </div>
+      </div>
+    </footer>
   </div>
 
-  <nav id="navbar">
-    <div class="nav-inner">
-      <a href="#hero" class="nav-logo">NP<span class="accent">.</span></a>
-
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#about" class="nav-link">About</a></li>
-        <li><a href="#skills" class="nav-link">Skills</a></li>
-        <li><a href="#projects" class="nav-link">Projects</a></li>
-        <li><a href="#achievements" class="nav-link">Achievements</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
-      </ul>
-
-      <div class="nav-actions">
-        <button id="themeToggle" class="icon-btn" aria-label="Toggle theme">
-          <i class="bx bx-moon" id="themeIcon"></i>
-        </button>
-        <button id="menuToggle" class="icon-btn hamburger" aria-label="Toggle menu" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-
-    <div class="mobile-menu" id="mobileMenu">
-      <ul>
-        <li><a href="#about" class="nav-link">About</a></li>
-        <li><a href="#skills" class="nav-link">Skills</a></li>
-        <li><a href="#projects" class="nav-link">Projects</a></li>
-        <li><a href="#achievements" class="nav-link">Achievements</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <main>
-
-    <section id="hero">
-      <div class="blob blob-1" aria-hidden="true"></div>
-      <div class="blob blob-2" aria-hidden="true"></div>
-
-      <div class="hero-content reveal">
-        <h1 class="hero-name">
-          Nyko Paolo<br />
-          <span class="hero-surname">P. Guillero</span>
-        </h1>
-        <p class="hero-bio">
-          <span id="typingTarget"></span><span class="cursor">|</span>
-        </p>
-
-        <div class="hero-contacts">
-          <a href="https://facebook.com" target="_blank" rel="noopener" class="contact-chip">
-            <i class="bx bxl-facebook-circle"></i> Nyko Paolo
-          </a>
-          <a href="tel:09262500133" class="contact-chip">
-            <i class="bx bx-phone"></i> 09262500133
-          </a>
-        </div>
-
-        <a href="#projects" class="btn btn-primary">
-          View My Projects <i class="bx bx-right-arrow-alt"></i>
-        </a>
-      </div>
-
-      <div class="hero-card reveal" aria-hidden="true">
-        <div class="code-card">
-          <div class="code-dots">
-            <span></span><span></span><span></span>
-          </div>
-          <pre class="code-snippet"><code><span class="kw">const</span> <span class="fn">developer</span> = {
-          name: <span class="str">"Nyko Paolo"</span>,
-          role: <span class="str">"IT Student"</span>,
-          passion: [
-            <span class="str">"Web Dev"</span>,
-            <span class="str">"Mobile Dev"</span>,
-            <span class="str">"Innovation"</span>,
-          ],
-          available: <span class="bool">true</span>,
-        };
-</code></pre>
-        </div>
-      </div>
-
-      <div class="scroll-hint" aria-hidden="true">
-        <span>Scroll</span>
-        <div class="scroll-line"></div>
-      </div>
-    </section>
-
-    <section id="about">
-      <div class="section-label reveal">01 — About</div>
-      <div class="about-grid">
-        <div class="about-photo reveal">
-          <div class="photo-frame">
-            <img src="Src/Nyko Guillero.png" alt="Nyko Paolo P. Guillero" class="profile-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-            <div class="photo-placeholder" style="display:none;">
-              <i class="bx bx-user"></i>
-              <span>Add your photo</span>
-            </div>
-          </div>
-          <div class="photo-accent-ring" aria-hidden="true"></div>
-        </div>
-
-        <div class="about-text reveal">
-          <h2 class="section-title">Who Am I?</h2>
-          <p>
-            I'm <strong>Nyko Paolo P. Guillero</strong>, an aspiring IT student currently pursuing a 
-            <strong>Bachelor of Science in Information Technology</strong>.
-            I'm passionate about crafting clean, functional, and beautiful web and mobile experiences 
-            that solve real-world problems.
-          </p>
-          <p>
-            From building grocery inventory systems to peer-tutoring apps, I love turning ideas 
-            into working software.
-            I thrive on learning new technologies and pushing the boundaries 
-            of what I can create.
-          </p>
-          <div class="about-badges">
-            <span class="badge"><i class="bx bx-book-open"></i> BSIT Student</span>
-            <span class="badge"><i class="bx bx-code-alt"></i> Web Developer</span>
-            <span class="badge"><i class="bx bx-mobile-alt"></i> Mobile Dev</span>
-          </div>
-        </div>
-
-        <div class="about-card reveal">
-          <div class="info-card">
-            <h3>Quick Facts</h3>
-            <ul>
-              <li><i class="bx bx-user"></i> <span>Nyko Paolo P. Guillero</span></li>
-              <li><i class="bx bx-book-open"></i> <span>BS Information Technology</span></li>
-              <li><i class="bx bx-phone"></i> <span>09262500133</span></li>
-              <li><i class="bx bxl-facebook"></i> <span>Nyko Paolo</span></li>
-              <li><i class="bx bx-map"></i> <span>Philippines</span></li>
-              <li><i class="bx bx-check-circle"></i> <span>Open to Opportunities</span></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="skills">
-      <div class="section-label reveal">02 — Skills</div>
-      <h2 class="section-title reveal">What I Work With</h2>
-      <p class="section-sub reveal">A growing toolkit built through projects and continuous learning.</p>
-
-      <div class="skills-grid reveal">
-        <div class="skill-card">
-          <div class="skill-icon"><i class="bx bxl-html5"></i></div>
-          <div class="skill-info">
-            <h4>HTML</h4>
-            <p>Semantic markup &amp; modern HTML5 standards.</p>
-          </div>
-          <span class="skill-level">Proficient</span>
-        </div>
-
-        <div class="skill-card">
-          <div class="skill-icon"><i class="bx bxl-css3"></i></div>
-          <div class="skill-info">
-            <h4>CSS</h4>
-            <p>Responsive layouts, animations &amp; Flexbox/Grid.</p>
-          </div>
-          <span class="skill-level">Proficient</span>
-        </div>
-
-        <div class="skill-card">
-          <div class="skill-icon"><i class="bx bxl-javascript"></i></div>
-          <div class="skill-info">
-            <h4>JavaScript</h4>
-            <p>DOM manipulation, ES6+ &amp; interactive UIs.</p>
-          </div>
-          <span class="skill-level">Intermediate</span>
-        </div>
-
-        <div class="skill-card">
-          <div class="skill-icon"><i class="bx bxl-php"></i></div>
-          <div class="skill-info">
-            <h4>PHP</h4>
-            <p>Server-side scripting &amp; dynamic web apps.</p>
-          </div>
-          <span class="skill-level">Intermediate</span>
-        </div>
-
-        <div class="skill-card">
-          <div class="skill-icon"><i class="bx bx-leaf"></i></div>
-          <div class="skill-info">
-            <h4>Laravel</h4>
-            <p>MVC framework for robust PHP web development.</p>
-          </div>
-          <span class="skill-level">Learning</span>
-        </div>
-
-        <div class="skill-card">
-          <div class="skill-icon"><i class="bx bxl-react"></i></div>
-          <div class="skill-info">
-            <h4>NativeWind</h4>
-            <p>Tailwind CSS styling for React Native mobile apps.</p>
-          </div>
-          <span class="skill-level">Learning</span>
-        </div>
-      </div>
-    </section>
-
-   <section id="projects">
-      <div class="section-label reveal">03 — Projects</div>
-      <h2 class="section-title reveal">Things I've Built</h2>
-      <p class="section-sub reveal">A selection of academic and personal projects.</p>
-
-      <div class="projects-grid">
-        <article class="project-card reveal">
-            <div class="project-img" onclick="openLightbox('Src/Tunhay.jpg')">
-            <img src="Src/Tunhay.jpg" alt="Tunhay Grocery System">
-          </div>
-          <div class="project-body">
-            <h3 class="project-title">Tunhay Grocery System</h3>
-            <p class="project-desc">A web-based sales and inventory management system.</p>
-            <div class="project-tags">
-              <span class="tag">PHP</span><span class="tag">Laravel</span><span class="tag">MySQL</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal">
-          <div class="project-img" onclick="openLightbox('Src/EduTor.jpg')">
-          <img src="Src/EduTor.jpg" alt="Tunhay Grocery System">
-          </div>
-          <div class="project-body">
-            <h3 class="project-title">EduTor</h3>
-            <p class="project-desc">A peer tutor booking mobile application.</p>
-            <div class="project-tags">
-              <span class="tag">React Native</span><span class="tag">NativeWind</span><span class="tag">Laravel</span>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="achievements">
-      <div class="section-label reveal">04 — Achievements</div>
-      <h2 class="section-title reveal">Certificates & Recognition</h2>
-      <p class="section-sub reveal">Milestones along my learning journey — more coming soon!</p>
-
-      <div class="achievements-grid">
-        <div class="achievement-card cert-card reveal">
-          <div class="cert-preview">
-            <div class="cert-logo">
-              <span class="oracle-text">ORACLE</span>
-              <span class="oracle-sub">Academy</span>
-            </div>
-            <div class="cert-badge"><i class="bx bxs-award"></i></div>
-          </div>
-          <div class="ach-body">
-            <span class="ach-org">Oracle Academy</span>
-            <h4>Java Fundamentals</h4>
-            <p>Award of Course Completion — for satisfactory completion of all coursework.</p>
-            <div class="cert-meta">
-              <span class="cert-date"><i class="bx bx-calendar"></i> June 19, 2024</span>
-              <span class="ach-tag cert">Certificate</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="achievement-card reveal">
-          <div class="ach-icon"><i class="bx bxs-medal"></i></div>
-          <div class="ach-body">
-            <h4>Web Development Fundamentals</h4>
-            <p>Completed core coursework covering HTML, CSS, and responsive design principles.</p>
-            <span class="ach-tag">Academic</span>
-          </div>
-        </div>
-
-        <div class="achievement-card reveal">
-          <div class="ach-icon"><i class="bx bxs-trophy"></i></div>
-          <div class="ach-body">
-            <h4>Capstone Project — Tunhay Grocery</h4>
-            <p>Presented a full-stack web application for a local business.</p>
-            <span class="ach-tag">Project</span>
-          </div>
-        </div>
-
-        <div class="achievement-card reveal">
-          <div class="ach-icon"><i class="bx bxs-star"></i></div>
-          <div class="ach-body">
-            <h4>Mobile App Development</h4>
-            <p>Built EduTor, a cross-platform peer tutoring app using React Native and NativeWind.</p>
-            <span class="ach-tag">Project</span>
-          </div>
-        </div>
-
-        <div class="achievement-card reveal placeholder-card">
-          <div class="ach-icon"><i class="bx bx-plus-circle"></i></div>
-          <div class="ach-body">
-            <h4>More Achievements Coming</h4>
-            <p>Continuously learning and earning new certifications. Stay tuned!</p>
-            <span class="ach-tag">Soon</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact">
-      <div class="section-label reveal">05 — Contact</div>
-      <h2 class="section-title reveal">Let's Connect</h2>
-      <p class="section-sub reveal">Got a project in mind or just want to say hi? Drop a message!</p>
-
-      <div class="contact-grid">
-        <div class="contact-form-wrap reveal">
-          <form id="contactForm" novalidate>
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" id="name" name="name" placeholder="Your full name" required />
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" placeholder="your@email.com" required />
-            </div>
-            <div class="form-group">
-              <label for="message">Message</label>
-              <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary full-width">
-              Send Message <i class="bx bx-send"></i>
-            </button>
-            <div id="formSuccess" class="form-success" hidden>
-              ✅ Message sent! I'll get back to you soon.
-            </div>
-          </form>
-        </div>
-
-        <div class="contact-info reveal">
-          <h3>Reach Me Directly</h3>
-          <ul class="contact-list">
-            <li>
-              <a href="https://github.com/GwapitoPoAko/Web-Development-Porfolio-/tree/main" target="_blank" rel="noopener">
-                <i class="bx bxl-github"></i>
-                <div><span>GitHub</span><strong>My github</strong></div>
-              </a>
-            </li>
-            <li>
-              <a href="https://facebook.com" target="_blank" rel="noopener">
-                <i class="bx bxl-facebook-circle"></i>
-                <div>
-                  <span>Facebook</span>
-                  <strong>Nyko Paolo</strong>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="tel:09262500133">
-                <i class="bx bx-phone"></i>
-                <div>
-                  <span>Phone</span>
-                  <strong>09262500133</strong>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="mailto:nykomanzano@gmail.com">
-                <i class="bx bx-envelope"></i>
-                <div>
-                  <span>Email</span>
-                  <strong>nykomanzano@gmail.com</strong>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer>
-    <p>Designed & Built by <strong>Nyko Paolo P. Guillero</strong> &nbsp;·&nbsp; 2026</p>
-  </footer>
-
-  <button id="backToTop" class="back-top" aria-label="Back to top">
-    <i class="bx bx-up-arrow-alt"></i>
-  </button>
-
-  <script src="Script.js"></script>
-
-  <div id="lightbox" class="lightbox" onclick="this.style.display='none'">
-  <span class="close">&times;</span>
-  <img class="lightbox-content" id="fullImage" src="" alt="Zoomed view">
-</div>
-
-<script>
-  
-  function openLightbox(imgSrc) {
-    const lightbox = document.getElementById('lightbox');
-    const fullImage = document.getElementById('fullImage');
-    fullImage.src = imgSrc;
-    lightbox.style.display = 'flex';
-  }
-</script>
+  <script src="script.js"></script>
 </body>
 </html>
